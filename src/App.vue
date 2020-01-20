@@ -6,10 +6,13 @@
             v-toolbar-title Ad application
             v-spacer
             v-btn(text) Один
+                v-icon mdi-domain
             v-btn(text) Два
+                v-icon mdi-message-text
             v-btn(text) Три
+                v-icon mdi-arrow-up-bold-box-outline
         v-content
-            |router-view
+            | router-view
         v-footer(app) &copy; 2020
 </template>
 
