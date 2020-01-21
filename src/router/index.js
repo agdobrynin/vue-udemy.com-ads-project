@@ -5,7 +5,7 @@ import Home from "@/components/Home";
 Vue.use(Router);
 const routes = [
     {
-        path: "",
+        path: "/",
         name: "home",
         component: Home,
     },
@@ -20,14 +20,25 @@ const routes = [
         component: () => import(/* webpackChunkName: "registration" */ "@/components/Auth/Registration") ,
     },
     {
-        path: "/newad",
-        name: "newAd",
-        component: () => import(/* webpackChunkName: "newadv" */ "@/components/Ads/NewAd"),
+        path: "/newadv",
+        name: "newAdv",
+        component: () => import(/* webpackChunkName: "newAdv" */ "@/components/Ads/NewAd"),
     },
     {
         path: "/listads",
         name: "listAds",
-        component: () => import(/* webpackChunkName: "listads" */ "@/components/Ads/ListAds"),
+        component: () => import(/* webpackChunkName: "listAds" */ "@/components/Ads/ListAds"),
+    },
+    {
+        path: "/adv/:id",
+        name: "oneAdv",
+        component: () => import(/* webpackChunkName: "oneAdv" */ "@/components/PageNotFound"),
+    },
+    // Page not found
+    {
+        path: '*',
+        name: 'pageNotFound',
+        component: () => import(/* webpackChunkName: "pageNotFount" */ "@/components/PageNotFound"),
     },
 ];
 export default new Router({
