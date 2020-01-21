@@ -1,11 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router"
 import Home from "@/components/Home";
-import Login from "@/components/Auth/Login";
-import Registration from "@/components/Auth/Registration";
-import NewAd from "@/components/Ads/NewAd";
-import ListAds from "@/components/Ads/ListAds";
-
 
 Vue.use(Router);
 const routes = [
@@ -17,22 +12,22 @@ const routes = [
     {
         path: "/login",
         name: "login",
-        component: Login,
+        component: () => import(/* webpackChunkName: "login" */ "@/components/Auth/Login"),
     },
     {
         path: "/registration",
         name: "registration",
-        component: Registration,
+        component: () => import(/* webpackChunkName: "registration" */ "@/components/Auth/Registration") ,
     },
     {
         path: "/newad",
-        name: "newad",
-        component: NewAd,
+        name: "newAd",
+        component: () => import(/* webpackChunkName: "newadv" */ "@/components/Ads/NewAd"),
     },
     {
         path: "/listads",
-        name: "listads",
-        component: ListAds,
+        name: "listAds",
+        component: () => import(/* webpackChunkName: "listads" */ "@/components/Ads/ListAds"),
     },
 ];
 export default new Router({
