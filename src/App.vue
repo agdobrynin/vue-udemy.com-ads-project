@@ -8,8 +8,10 @@
                     v-list-item-content
                         v-list-item-title {{ item.title }}
         v-app-bar(app dense dark color="primary")
-            v-app-bar-nav-icon(@click="navigationDrawer = !navigationDrawer" class="hidden-sm-up")
-            v-toolbar-title Доска объявлений
+            v-app-bar-nav-icon(@click="navigationDrawer = !navigationDrawer" class="hidden-md-and-up")
+            v-toolbar-title
+                router-link(:to="{name: 'home'}" tag="span" class="pointer")
+                    | Доска объявлений
             v-spacer
             v-btn(text v-for="(item, index) in list" :key="index" :to="item.url" class="hidden-sm-and-down")
                 v-icon(left) {{ item.icon }}
@@ -40,7 +42,7 @@
                     {
                         icon: "mdi-newspaper-plus",
                         title: "Новое объявление",
-                        url: "/newad",
+                        url: "/newadv",
                     },
                     {
                         icon: "mdi-format-list-checkbox",
@@ -52,3 +54,7 @@
         },
     };
 </script>
+
+<style scoped>
+    .pointer{ cursor: pointer;}
+</style>
