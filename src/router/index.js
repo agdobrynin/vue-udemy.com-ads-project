@@ -32,7 +32,7 @@ const routes = [
     {
         path: "/adv/:id",
         name: "oneAdv",
-        component: () => import(/* webpackChunkName: "oneAdv" */ "@/components/PageNotFound"),
+        component: () => import(/* webpackChunkName: "oneAdv" */ "@/components/Ads/OneAd"),
     },
     // Page not found
     {

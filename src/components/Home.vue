@@ -22,7 +22,7 @@
                             div {{ ad.desc }}
                         v-divider
                         v-card-actions(align="right")
-                            v-btn(color="info") Просмотр
+                            v-btn(color="info" :to="{name: 'oneAdv', params:{id: index}}") Просмотр
                             v-spacer
                             v-btn(color="success") Купить
 
