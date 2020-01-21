@@ -16,7 +16,8 @@
                 v-flex(v-for="(ad, index) in adsList" :key="index" xs12 sm6 md4)
                     v-card.mx-auto(max-width="400")
                         v-img.white--text.align-end(height="200px" :src="ad.imageSrc")
-                            v-card-title {{ ad.title }}
+                            v-card-title(class="card__title_bg")
+                                span.white--text {{ ad.title }}
                         v-card-subtitle.pb-0 {{ ad.date }}
                         v-card-text.text--primary
                             div {{ ad.desc }}
@@ -51,19 +52,19 @@
                 adsList: [
                     {
                         imageSrc : "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
-                        title: "Lorem ipsum dolor sit amet.",
+                        title: "Lorem ipsum.",
                         date: "20.01.2020",
                         desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos!",
                     },
                     {
                         imageSrc : "https://cdn.vuetifyjs.com/images/cards/house.jpg",
-                        title: "Ipsum dolor lorem sit amet.",
+                        title: "Ipsum dolor.",
                         date: "18.01.2020",
                         desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos!",
                     },
                     {
                         imageSrc : "https://cdn.vuetifyjs.com/images/cards/road.jpg",
-                        title: "Lorem ipsum dolor.",
+                        title: "Lorem dolor amet.",
                         date: "15.01.2020",
                         desc: "Eos, quos! Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
                     },
@@ -77,5 +78,9 @@
 <style scoped>
     .buttonGoto {
         bottom: 60px;
+    }
+    .card__title_bg {
+        background: rgb(0, 0, 0); /* Fallback for older browsers without RGBA-support */
+        background: rgba(0, 0, 0, 0.5);
     }
 </style>
