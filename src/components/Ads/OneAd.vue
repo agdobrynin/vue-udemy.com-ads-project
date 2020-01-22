@@ -3,7 +3,7 @@
         v-card.mx-auto.d-flex.flex-column(min-height="500")
             v-img(:src="adv.imageSrc" height="200px")
             v-card-title {{ adv.title }}
-            v-card-subtitle {{ adv.date }}, {{ adv.author }}
+            v-card-subtitle {{ adv.date }}
             v-card-text {{ adv.desc }}
             v-card-actions
                 v-spacer
