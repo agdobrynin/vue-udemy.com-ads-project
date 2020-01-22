@@ -9,7 +9,7 @@
                         | Просмотр
                     v-sheet(:color="adv.color || 'primary'" height="auto")
                         v-row.fill-height(align="center" justify="center")
-                            .display-3 {{ adv.title }}
+                            .display-3.text-truncate.mx-5 {{ adv.title }}
 
         v-container(grid-list-lg)
             v-layout(row wrap)
@@ -45,7 +45,7 @@
                     },
                     {
                         imageSrc : "https://cdn.vuetifyjs.com/images/cards/house.jpg",
-                        title: "Ipsum dolor.",
+                        title: "Ipsum dolor consectetur.",
                         date: "18.01.2020",
                         desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos!",
                     },

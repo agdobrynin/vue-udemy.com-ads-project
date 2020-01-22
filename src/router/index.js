@@ -34,6 +34,11 @@ const routes = [
         name: "oneAdv",
         component: () => import(/* webpackChunkName: "oneAdv" */ "@/components/Ads/OneAd"),
     },
+    {
+        path: "/orders",
+        name: "orders",
+        component: () => import(/* webpackChunkName: "orders" */ "@/components/User/Orders"),
+    },
     // Page not found
     {
         path: '*',

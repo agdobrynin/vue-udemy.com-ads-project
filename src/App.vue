@@ -48,6 +48,11 @@
                         icon: "mdi-format-list-checkbox",
                         title: "Мои объявления",
                         url: "/listads",
+                    },
+                    {
+                        icon: "mdi-cash-multiple",
+                        title: "Заказы на покупку",
+                        url: "/orders",
                     }
                 ],
             }
