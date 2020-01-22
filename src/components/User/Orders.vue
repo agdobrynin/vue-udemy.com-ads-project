@@ -2,7 +2,7 @@
     v-container
         v-layout(row)
             v-flex(sm6 offset-3)
-                v-list
+                v-list(elevation="10")
                     v-toolbar-title.px-6 Заказы на покупку
                     v-list-item-group(multiple)
                         v-list-item(v-for="(order, index) in orders" :key="index")
