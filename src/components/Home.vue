@@ -13,19 +13,17 @@
 
         v-container(grid-list-lg)
             v-layout(row wrap)
-                v-flex(v-for="(ad, index) in adsList" :key="index" xs12 sm6 md4)
-                    v-card.mx-auto(max-width="400")
-                        v-img.white--text.align-end(height="200px" :src="ad.imageSrc")
+                v-flex(v-for="(adv, index) in adsList" :key="index" xs12 sm6 md4)
+                    v-card.mx-auto.d-flex.flex-column(max-width="400" min-height="400")
+                        v-img.white--text.align-end(height="200px" :src="adv.imageSrc")
                             v-card-title(class="card__title_bg")
-                                span.white--text {{ ad.title }}
-                        v-card-subtitle.pb-0 {{ ad.date }}
+                                span.white--text {{ adv.title }}
+                        v-card-subtitle.pb-0 {{ adv.date }}
                         v-card-text.text--primary
-                            div {{ ad.desc }}
-                        v-divider
-                        v-card-actions(align="right")
-                            v-btn(color="info" :to="{name: 'oneAdv', params:{id: index}}") Просмотр
-                            v-spacer
-                            v-btn(color="success") Купить
+                            div {{adv.desc.slice(0,75)}}&hellip;
+                        v-card-actions(align-end)
+                            v-btn(bottom color="info" :to="{name: 'oneAdv', params:{id: adv.id}}") Просмотр
+                            v-btn(bottom color="success") Купить
 
 
 </template>
@@ -41,12 +39,14 @@
                     date: "20.01.2020",
                     desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos!",
                     color: "indigo",
+                    id: 123,
                 },
                 {
                     imageSrc: "https://cdn.vuetifyjs.com/images/cards/house.jpg",
                     title: "Ipsum dolor consectetur.",
                     date: "18.01.2020",
                     desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos!",
+                    id: 789,
                 },
                 {
                     imageSrc: "https://cdn.vuetifyjs.com/images/cards/road.jpg",
@@ -54,6 +54,7 @@
                     date: "15.01.2020",
                     desc: "Eos, quos! Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
                     color: "deep-purple accent-4",
+                    id: 9654,
                 },
 
             ],
