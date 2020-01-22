@@ -7,7 +7,7 @@
                         v-toolbar-title Новое объявление
                     v-spacer
                     v-card-text
-                        v-form(v-model="valid" ref="form" validate)
+                        v-form(v-model="valid" ref="form" validate @submit.prevent="")
                             v-text-field(
                                 label="Заголовок" type="text" name="title" v-model="title"
                                 prepend-icon="mdi-page-layout-header"
