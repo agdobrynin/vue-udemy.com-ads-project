@@ -33,33 +33,31 @@
 <script>
     export default {
         name: "Home",
-        data () {
-            return {
-                adsList: [
-                    {
-                        imageSrc : "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
-                        title: "Lorem ipsum.",
-                        date: "20.01.2020",
-                        desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos!",
-                        color: "indigo",
-                    },
-                    {
-                        imageSrc : "https://cdn.vuetifyjs.com/images/cards/house.jpg",
-                        title: "Ipsum dolor consectetur.",
-                        date: "18.01.2020",
-                        desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos!",
-                    },
-                    {
-                        imageSrc : "https://cdn.vuetifyjs.com/images/cards/road.jpg",
-                        title: "Lorem dolor amet.",
-                        date: "15.01.2020",
-                        desc: "Eos, quos! Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
-                        color: "deep-purple accent-4",
-                    },
+        data: () => ({
+            adsList: [
+                {
+                    imageSrc: "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
+                    title: "Lorem ipsum.",
+                    date: "20.01.2020",
+                    desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos!",
+                    color: "indigo",
+                },
+                {
+                    imageSrc: "https://cdn.vuetifyjs.com/images/cards/house.jpg",
+                    title: "Ipsum dolor consectetur.",
+                    date: "18.01.2020",
+                    desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos!",
+                },
+                {
+                    imageSrc: "https://cdn.vuetifyjs.com/images/cards/road.jpg",
+                    title: "Lorem dolor amet.",
+                    date: "15.01.2020",
+                    desc: "Eos, quos! Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+                    color: "deep-purple accent-4",
+                },
 
-                ],
-            }
-        }
+            ],
+        }),
     }
 </script>
 
@@ -67,6 +65,7 @@
     .buttonGoto {
         bottom: 60px;
     }
+
     .card__title_bg {
         background: rgb(0, 0, 0); /* Fallback for older browsers without RGBA-support */
         background: rgba(0, 0, 0, 0.5);
