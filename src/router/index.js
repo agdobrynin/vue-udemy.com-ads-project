@@ -32,6 +32,7 @@ const routes = [
     {
         path: "/adv/:id",
         name: "oneAdv",
+        props: true,
         component: () => import(/* webpackChunkName: "oneAdv" */ "@/components/Ads/OneAd"),
     },
     {
