@@ -2,9 +2,9 @@
     div
         v-container
             v-carousel(cycle="" height="400" hide-delimiter-background="" show-arrows-on-hover="")
-                v-carousel-item(v-for="(adv, index) in adsList" :key="index" :src="adv.imageSrc" progress touch)
+                v-carousel-item(v-for="(adv, index) in promoAds" :key="index" :src="adv.imageSrc" progress touch)
                     v-btn(
-                        :to="{name: 'oneAdv', params:{id: index}}"
+                        :to="{name: 'oneAdv', params:{id: adv.id}}"
                         class="buttonGoto" absolute bottom right)
                         | Просмотр
                     v-sheet(:color="adv.color || 'primary'" height="auto")
@@ -31,34 +31,10 @@
 <script>
     export default {
         name: "Home",
-        data: () => ({
-            adsList: [
-                {
-                    imageSrc: "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
-                    title: "Lorem ipsum.",
-                    date: "20.01.2020",
-                    desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos!",
-                    color: "indigo",
-                    id: 123,
-                },
-                {
-                    imageSrc: "https://cdn.vuetifyjs.com/images/cards/house.jpg",
-                    title: "Ipsum dolor consectetur.",
-                    date: "18.01.2020",
-                    desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos!",
-                    id: 789,
-                },
-                {
-                    imageSrc: "https://cdn.vuetifyjs.com/images/cards/road.jpg",
-                    title: "Lorem dolor amet.",
-                    date: "15.01.2020",
-                    desc: "Eos, quos! Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
-                    color: "deep-purple accent-4",
-                    id: 9654,
-                },
-
-            ],
-        }),
+        computed: {
+            promoAds: self => self.$store.getters.adsPromo,
+            adsList: self => self.$store.getters.adsAll,
+        },
     }
 </script>
 
