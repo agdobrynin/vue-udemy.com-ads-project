@@ -32,8 +32,17 @@ export default {
             },
         ]
     },
-    mutations: {},
-    actions: {},
+    mutations: {
+        setNewAdv(state, payload) {
+            state.ads.push(payload);
+        },
+    },
+    actions: {
+        actionNewAdv({ commit }, payload) {
+            payload.id = Math.random();
+            commit("setNewAdv", payload);
+        },
+    },
     getters: {
         adsAll: (state) => state.ads,
         adsPromo: (state) => state.ads.filter( adv => adv.promo ),

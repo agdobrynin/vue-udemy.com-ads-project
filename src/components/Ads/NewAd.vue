@@ -13,7 +13,7 @@
                                 prepend-icon="mdi-page-layout-header"
                                 :rules="rulesRequire")
                             v-textarea(
-                                label="Объявление" type="text" name="description" v-model="description"
+                                label="Объявление" type="text" name="desc" v-model="desc"
                                 prepend-icon="mdi-clipboard-text-outline"
                                 multiline
                                 :rules="rulesRequire")
@@ -34,7 +34,7 @@
         data: () => ({
             valid: false,
             title: "",
-            description: "",
+            desc: "",
             promo: false,
             rulesRequire: [
                 v => !!v || "Обязательное поле",
@@ -42,7 +42,16 @@
         }),
         methods: {
             doSave() {
-
+                if (this.$refs.form.validate()) {
+                    const dataAdv = {
+                        title: this.title,
+                        desc: this.desc,
+                        promo: this.promo,
+                        date: new Date().toLocaleString("ru"),
+                        imageSrc: "https://klike.net/uploads/posts/2019-01/1547365376_1.jpg",
+                    };
+                    this.$store.dispatch('actionNewAdv', dataAdv);
+                }
             },
         },
     }
