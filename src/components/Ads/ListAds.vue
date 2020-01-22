@@ -3,7 +3,7 @@
         h1 Список моих объявлений
         v-layout(grid-list-lg)
             v-layout(row wrap)
-                v-flex(v-for="(adv, index) in adsList" :key="index" xs12 sm6 md4 pa-5)
+                v-flex(v-for="(adv, index) in adsOwner" :key="index" xs12 sm6 md4 pa-5)
                     v-card.mx-auto.d-flex.flex-column(max-width="400" min-height="500"
                         :to="{name: 'oneAdv', params:{id: adv.id}}")
                         v-img(:src="adv.imageSrc" height='200px')
@@ -19,34 +19,11 @@
     export default {
         name: "ListAds",
         data: () => ({
-            show: false,
-            adsList: [
-                {
-                    id: 123,
-                    imageSrc: "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
-                    title: "Lorem ipsum.",
-                    date: "20.01.2020",
-                    desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos!",
-                    color: "indigo",
-                },
-                {
-                    id: 321,
-                    imageSrc: "https://cdn.vuetifyjs.com/images/cards/house.jpg",
-                    title: "Ipsum dolor consectetur.",
-                    date: "18.01.2020",
-                    desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet corporis deleniti inventore ipsam iure molestias, odit, quasi quod, ratione rerum sint.",
-                },
-                {
-                    id: 456,
-                    imageSrc: "https://cdn.vuetifyjs.com/images/cards/road.jpg",
-                    title: "Lorem dolor amet.",
-                    date: "15.01.2020",
-                    desc: "Eos, quos! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet corporis deleniti inventore ipsam iure molestias, odit, quasi quod, ratione rerum sint.",
-                    color: "deep-purple accent-4",
-                },
-
-            ],
+            userId: 1,
         }),
+        computed: {
+            adsOwner: self => self.$store.getters.adsOwner(self.userId),
+        },
     }
 </script>
 <style scoped>
