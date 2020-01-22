@@ -39,7 +39,7 @@ export default {
     },
     actions: {
         actionNewAdv({ commit }, payload) {
-            payload.id = Math.random();
+            payload.id = parseInt('' + Math.random() * 10000);
             commit("setNewAdv", payload);
         },
     },
