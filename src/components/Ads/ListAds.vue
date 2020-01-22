@@ -4,7 +4,8 @@
         v-layout(grid-list-lg)
             v-layout(row wrap)
                 v-flex(v-for="(adv, index) in adsList" :key="index" xs12 sm6 md4 pa-5)
-                    v-card.mx-auto(max-width="400")
+                    v-card.mx-auto.d-flex.flex-column(max-width="400" min-height="500"
+                        :to="{name: 'oneAdv', params:{id: adv.id}}")
                         v-img(:src="adv.imageSrc" height='200px')
                         v-card-title {{ adv.title }}
                         v-card-subtitle {{ adv.date }}
