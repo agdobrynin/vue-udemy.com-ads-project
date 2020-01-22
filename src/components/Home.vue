@@ -1,15 +1,15 @@
 <template lang="pug">
     div
         v-container
-            v-carousel(cycle='' height='400' hide-delimiter-background='' show-arrows-on-hover='')
-                v-carousel-item(v-for='(slide, index) in slides' :key='index')
+            v-carousel(cycle="" height="400" hide-delimiter-background="" show-arrows-on-hover="")
+                v-carousel-item(v-for="(adv, index) in adsList" :key="index" :src="adv.imageSrc" progress touch)
                     v-btn(
                         :to="{name: 'oneAdv', params:{id: index}}"
                         class="buttonGoto" absolute bottom right)
                         | Просмотр
-                    v-sheet(:color='colors[index]' height='100%')
-                        v-row.fill-height(align='center' justify='center')
-                            .display-3 {{ slide }} Slide
+                    v-sheet(:color="adv.color || 'primary'" height="auto")
+                        v-row.fill-height(align="center" justify="center")
+                            .display-3 {{ adv.title }}
 
         v-container(grid-list-lg)
             v-layout(row wrap)
@@ -35,26 +35,13 @@
         name: "Home",
         data () {
             return {
-                colors: [
-                    'indigo',
-                    'warning',
-                    'pink darken-2',
-                    'red lighten-1',
-                    'deep-purple accent-4',
-                ],
-                slides: [
-                    'First',
-                    'Second',
-                    'Third',
-                    'Fourth',
-                    'Fifth',
-                ],
                 adsList: [
                     {
                         imageSrc : "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
                         title: "Lorem ipsum.",
                         date: "20.01.2020",
                         desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos!",
+                        color: "indigo",
                     },
                     {
                         imageSrc : "https://cdn.vuetifyjs.com/images/cards/house.jpg",
@@ -67,6 +54,7 @@
                         title: "Lorem dolor amet.",
                         date: "15.01.2020",
                         desc: "Eos, quos! Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+                        color: "deep-purple accent-4",
                     },
 
                 ],
