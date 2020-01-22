@@ -37,7 +37,7 @@ export default {
     getters: {
         adsAll: (state) => state.ads,
         adsPromo: (state) => state.ads.filter( adv => adv.promo ),
-        adsOwner: (state) => state.ads.filter( adv =>  adv.userId === 1),
+        adsOwner: (state) => userId => state.ads.filter( adv =>  adv.userId === userId),
         advById: (state) =>  adId => state.ads.find( adv => adv.id === adId),
     },
 }
