@@ -32,8 +32,7 @@
     const MIN_PASSWORD_LENGTH = 6;
     export default {
         name: "Login",
-        data () {
-            return {
+        data: (self) => ({
                 minPasswordLength: MIN_PASSWORD_LENGTH,
                 valid: false,
 
@@ -46,14 +45,13 @@
                 ],
                 rulesPassword: [
                     v => !!v || "Пароль обязательное поле",
-                    v => v.length >= this.minPasswordLength || `Пароля не менее ${this.minPasswordLength} символов`,
+                    v => v.length >= self.minPasswordLength || `Пароля не менее ${self.minPasswordLength} символов`,
                 ],
                 rulesPasswordConfirm: [
                     v => !!v || "Подтвердите пароль",
-                    v => v === this.password || `Пароли не совпадаю`,
+                    v => v === self.password || `Пароли не совпадаю`,
                 ],
-            }
-        },
+        }),
         computed: {
             loading: (self) => self.$store.getters.loading,
             error: (self) => self.$store.getters.error,
@@ -68,11 +66,7 @@
                     this.$store.dispatch("actionRegisterUser", user)
                         .then( () => {
                             this.$router.push("/");
-                        })
-                        .catch( error => {
-                            // eslint-disable-next-line no-console
-                            console.log(error);
-                        });
+                        }).catch( () => {});
                 }
             }
         },

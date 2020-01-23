@@ -19,47 +19,63 @@
         v-content
             router-view
         v-footer(app) &copy; 2020
+
+        v-snackbar(
+            v-if="error"
+            :timeout="8000"
+            :value="true"
+            @click="closeError"
+            multi-line=true) {{ error }}
+            v-btn(color="red" text="" @click.native="closeError") Закрыть
 </template>
 
 <script>
 
     export default {
         name: "App",
-        data() {
-            return {
-                navigationDrawer: false,
-                list: [
-                    {
-                        icon: "mdi-lock",
-                        title: "Вход",
-                        url: "/login",
-                    },
-                    {
-                        icon: "mdi-account-plus",
-                        title: "Регистрация",
-                        url: "/registration",
-                    },
-                    {
-                        icon: "mdi-newspaper-plus",
-                        title: "Новое объявление",
-                        url: "/newadv",
-                    },
-                    {
-                        icon: "mdi-format-list-checkbox",
-                        title: "Мои объявления",
-                        url: "/listads",
-                    },
-                    {
-                        icon: "mdi-cash-multiple",
-                        title: "Заказы на покупку",
-                        url: "/orders",
-                    }
-                ],
-            }
+        data: () => ({
+            navigationDrawer: false,
+            list: [
+                {
+                    icon: "mdi-lock",
+                    title: "Вход",
+                    url: "/login",
+                },
+                {
+                    icon: "mdi-account-plus",
+                    title: "Регистрация",
+                    url: "/registration",
+                },
+                {
+                    icon: "mdi-newspaper-plus",
+                    title: "Новое объявление",
+                    url: "/newadv",
+                },
+                {
+                    icon: "mdi-format-list-checkbox",
+                    title: "Мои объявления",
+                    url: "/listads",
+                },
+                {
+                    icon: "mdi-cash-multiple",
+                    title: "Заказы на покупку",
+                    url: "/orders",
+                }
+            ],
+        }),
+        computed: {
+            error: (self) => self.$store.getters.error,
+        },
+        methods: {
+            closeError() {
+                this.$store.dispatch("actionClearError");
+            },
         },
     };
 </script>
 
 <style scoped>
-    .pointer{ cursor: pointer;}
+    .pointer {
+        cursor: pointer;
+    }
 </style>
