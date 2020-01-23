@@ -7,7 +7,7 @@
                         v-toolbar-title Регистрация
                     v-spacer
                     v-card-text
-                        v-form(v-model="valid" ref="form" validate)
+                        v-form(v-model="valid" ref="form" validate loading="true")
                             v-text-field(
                                 label="E-mail" type="email" name="email" v-model="email" prepend-icon="mdi-account"
                                 :rules="rulesEmail")
@@ -20,7 +20,11 @@
                                 :rules="rulesPasswordConfirm")
                             v-card-actions
                                 v-spacer
-                                v-btn(color="primary" :disabled="!valid" @click="doRegistration") Войти
+                                v-btn(
+                                    color="primary"
+                                    :disabled="!valid || loading"
+                                    :loading="loading"
+                                    @click="doRegistration") Зарегистрироваться
 
 </template>
 
@@ -50,10 +54,26 @@
                 ],
             }
         },
+        computed: {
+            loading: (self) => self.$store.getters.loading,
+            error: (self) => self.$store.getters.error,
+        },
         methods: {
             doRegistration() {
-                // eslint-disable-next-line no-console
-                console.log(this.email, this.password);
+                if (this.$refs.form.validate()) {
+                    const user = {
+                        email: this.email,
+                        password: this.password,
+                    };
+                    this.$store.dispatch("actionRegisterUser", user)
+                        .then( () => {
+                            this.$router.push("/");
+                        })
+                        .catch( error => {
+                            // eslint-disable-next-line no-console
+                            console.log(error);
+                        });
+                }
             }
         },
     }

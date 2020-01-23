@@ -17,7 +17,11 @@
                                 :rules="rulesPassword")
                             v-card-actions
                                 v-spacer
-                                v-btn(color="primary" :disabled="!valid" @click="doLogin") Войти
+                                v-btn(
+                                    color="primary"
+                                    :loading="loading"
+                                    :disabled="!valid || loading"
+                                    @click="doLogin") Войти
 
 </template>
 
@@ -42,10 +46,23 @@
                 ],
             }
         },
+        computed: {
+            loading: (self) => self.$store.getters.loading,
+            error: (self) => self.$store.getters.error,
+        },
         methods: {
             doLogin() {
-                // eslint-disable-next-line no-console
-                console.log(this.email, this.password);
+                if (this.$refs.form.validate()) {
+                    const user = {email: this.email, password: this.password};
+                    this.$store.dispatch("actionLoginUser", user)
+                        .then( () => {
+                            this.$router.push("/");
+                        })
+                        .catch( error => {
+                            // eslint-disable-next-line no-console
+                            console.log(error);
+                        });
+                }
             }
         },
     }
