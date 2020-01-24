@@ -30,5 +30,7 @@ new Vue({
             this.$store.dispatch("user", new User(uid));
         });
 
+        this.$store.dispatch("fetchAds");
+
     },
 }).$mount("#app");

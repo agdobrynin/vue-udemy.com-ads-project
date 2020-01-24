@@ -1,16 +1,16 @@
 export default class Adv {
 
-    constructor(title, desc, promo, image, userId = null) {
-        this.id = null;
+    constructor(title, desc, promo, image, userId = null, id = null, date = null) {
+        this.id = id;
         this.title = title;
         this.desc = desc;
         this.promo = promo;
         this.image = image;
         this.userId = userId;
-        this.date = new Date().toISOString();
+        this.date = date || new Date(date).toISOString();
     }
 
-    date() {
-        return new Date(this.date).toLocaleDateString();
+    dateLocateString(locate = "ru") {
+        return new Date(this.date).toLocaleString(locate);
     }
 }

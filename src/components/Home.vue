@@ -1,5 +1,6 @@
 <template lang="pug">
     div
+        v-progress-linear(v-if="loading" indeterminate color="cyan" height="50") Загрузка объявлений&hellip;
         v-container(v-if="promoAds.length")
             v-carousel(cycle="" height="400" hide-delimiter-background="" show-arrows-on-hover="")
                 v-carousel-item(v-for="(adv, index) in promoAds" :key="index" :src="adv.image" progress touch)
@@ -24,8 +25,8 @@
                         v-card-actions(align-end)
                             v-btn(bottom color="info" :to="{name: 'oneAdv', params:{id: adv.id}}") Просмотр
                             v-btn(bottom color="success") Купить
-            v-flex(v-else)
-                v-alert(outlined='' type='warning' prominent='' border='left')
+            v-flex(v-else-if="!loading")
+                v-alert(outlined='' type='warning' prominent='' border='left' )
                     | В базе не найдено объявлений
 
 
@@ -37,6 +38,7 @@
         computed: {
             promoAds: self => self.$store.getters.adsPromo,
             adsList: self => self.$store.getters.adsAll,
+            loading: self => self.$store.getters.loading,
         },
     }
 </script>

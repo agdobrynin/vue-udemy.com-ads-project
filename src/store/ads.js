@@ -13,6 +13,35 @@ export default {
         },
     },
     actions: {
+        async fetchAds({ commit }) {
+            commit("setClearError");
+            commit("setLoading", true);
+            try {
+                // TODO вынести в констату приложения имя БД
+                const adsPromise = await firebase.database().ref("ads").once("value");
+                const ads = adsPromise.val();
+                if (ads) {
+                    Object.keys(ads).forEach( key => {
+                        const newAdv = new Ad();
+                        newAdv.id = key;
+                        newAdv.title = ads[key].title;
+                        newAdv.desc = ads[key].desc;
+                        newAdv.promo = ads[key].promo;
+                        newAdv.image = ads[key].image;
+                        newAdv.userId = ads[key].userId;
+                        newAdv.date = ads[key].date;
+                        // eslint-disable-next-line no-console
+                        console.log(newAdv.dateLocateString());
+                        commit("setAdv", newAdv);
+                    });
+                }
+            } catch (error) {
+                commit("setError", error.message);
+                throw error;
+            } finally {
+                commit("setLoading", false);
+            }
+        },
         async actionNewAdv({ commit, getters }, payload) {
             payload.id = parseInt('' + Math.random() * 10000);
             commit("setClearError");
