@@ -53,7 +53,7 @@
                         promo: this.promo,
                         image: "https://klike.net/uploads/posts/2019-01/1547365376_1.jpg",
                     };
-                    this.$store.dispatch("actionNewAdv", dataAdv).then( ()=> {
+                    this.$store.dispatch("newAdv", dataAdv).then( ()=> {
                         this.$router.push({name: "listAds"});
                     }).catch( () => {});
                 }

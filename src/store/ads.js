@@ -41,7 +41,7 @@ export default {
                 commit("setLoading", false);
             }
         },
-        async actionNewAdv({ commit, getters }, payload) {
+        async newAdv({ commit, getters }, payload) {
             payload.id = parseInt('' + Math.random() * 10000);
             commit("setClearError");
             commit("setLoading", true);
