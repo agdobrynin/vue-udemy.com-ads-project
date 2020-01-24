@@ -2,6 +2,13 @@
     v-app
         v-navigation-drawer(app temporary v-model="navigationDrawer")
             v-list(dense)
+                div(v-if="user")
+                    v-list-item
+                        v-list-item-avatar
+                            v-img(:src="user.photoURL")
+                        v-list-item-content
+                            v-list-item-title {{ user.email }}
+                    v-divider
                 v-list-item(v-for="(item, index) in menuLinks"
                     :key="index"
                     :to="item.url")
@@ -9,29 +16,23 @@
                         v-icon {{ item.icon }}
                     v-list-item-content
                         v-list-item-title {{ item.title }}
-                v-list-item-content(v-if="userEmail")
-                    v-list-item-title
-                        v-chip.ma-2(color='indigo' text-color='white')
-                            v-avatar(left='')
-                                v-icon mdi-account-circle
-                            | {{ userEmail }}
+
         v-app-bar(app dense dark color="primary")
             v-app-bar-nav-icon.hidden-md-and-up(@click="navigationDrawer = !navigationDrawer")
             v-toolbar-title
                 router-link(:to="{name: 'home'}" tag="span" class="pointer")
                     | Доска объявлений
             v-spacer
-            v-btn(text v-for="(item, index) in menuLinks"
-                :key="index"
-                :to="item.url"
-                class="hidden-sm-and-down")
-                v-icon(left) {{ item.icon }}
-                | {{ item.title }}
-            v-row.spacer.hidden-sm-and-down(v-if="userEmail")
-                v-chip.ma-2(color='indigo' text-color='white')
-                    v-avatar(left='')
-                        v-icon mdi-account-circle
-                    | {{ userEmail }}
+            v-toolbar-items.hidden-sm-and-down
+                v-list-item(v-for="(item, index) in menuLinks" :key="index")
+                    v-btn(text :to="item.url") {{ item.title }}
+                        v-icon {{ item.icon }}
+                    v-divider(inset vertical)
+                v-list-item.spacer.hidden-sm-and-down(v-if="user.id" text="")
+                    v-list-item-avatar
+                        v-img(:src="user.photoURL")
+                    v-list-item-content
+                        v-list-item-title {{ user.email }}
 
         v-content
             router-view
@@ -95,7 +96,7 @@
         computed: {
             error: (self) => self.$store.getters.error,
             menuLinks: (self) => self.menu.filter( menuItem => menuItem.auth === self.$store.getters.isUserLogin),
-            userEmail: (self) => self.$store.getters.user.id ? self.$store.getters.user.email : "",
+            user: (self) => self.$store.getters.user,
         },
         methods: {
             closeError() {
