@@ -3,18 +3,17 @@ import firebase from "firebase";
 
 export default {
     state: {
-        user: null,
+        user: new User(null),
     },
     mutations: {
-        setUser: (state, payload) => state.user = payload,
+        user: (state, payload) => state.user = payload,
     },
     actions: {
         async actionRegisterUser({commit}, {email, password}) {
             commit("setClearError");
             commit("setLoading", true);
             try {
-                const responseUser = await firebase.auth().createUserWithEmailAndPassword(email, password);
-                commit("setUser", new User(responseUser.uid));
+                await firebase.auth().createUserWithEmailAndPassword(email, password);
             } catch (error) {
                 commit("setError", error.message);
                 throw error;
@@ -26,8 +25,23 @@ export default {
             commit("setClearError");
             commit("setLoading", true);
             try {
-                const responseUser = await firebase.auth().signInWithEmailAndPassword(email, password);
-                commit("setUser", new User(responseUser.uid));
+                await firebase.auth().signInWithEmailAndPassword(email, password);
+            } catch (error) {
+                commit("setError", error.message);
+                throw error;
+            } finally {
+                commit("setLoading", false);
+            }
+        },
+        user ({commit}, dtoUser) {
+            commit("user", dtoUser);
+        },
+        async actionUserLogout ({commit}) {
+            commit("setClearError");
+            commit("setLoading", true);
+            try {
+                await firebase.auth().signOut();
+                commit("user", new User());
             } catch (error) {
                 commit("setError", error.message);
                 throw error;
@@ -38,5 +52,6 @@ export default {
     },
     getters: {
         user: (state) => state.user,
+        isUserLogin: (state) => state.user.id !== null,
     },
 }

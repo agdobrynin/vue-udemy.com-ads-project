@@ -30,32 +30,32 @@
     export default {
         name: "Login",
         data: (self) => ({
-                minPasswordLength: MIN_PASSWORD_LENGTH,
-                valid: false,
+            minPasswordLength: MIN_PASSWORD_LENGTH,
+            valid: false,
 
-                email: "",
-                password: "",
-                rulesEmail: [
-                    v => !!v || "E-mail обязательное поле",
-                    v => /.+@.+\.(\w{2,})/.test(v) || 'Значение не является email адресом',
-                ],
-                rulesPassword: [
-                    v => !!v || "Пароль обязательное поле",
-                    v => v.length >= self.minPasswordLength || `Пароля не менее ${self.minPasswordLength} символов`,
-                ],
+            email: "",
+            password: "",
+            rulesEmail: [
+                v => !!v || "E-mail обязательное поле",
+                v => /.+@.+\.(\w{2,})/.test(v) || 'Значение не является email адресом',
+            ],
+            rulesPassword: [
+                v => !!v || "Пароль обязательное поле",
+                v => v.length >= self.minPasswordLength || `Пароля не менее ${self.minPasswordLength} символов`,
+            ],
         }),
         computed: {
             loading: (self) => self.$store.getters.loading,
-            error: (self) => self.$store.getters.error,
         },
         methods: {
             doLogin() {
                 if (this.$refs.form.validate()) {
                     const user = {email: this.email, password: this.password};
                     this.$store.dispatch("actionLoginUser", user)
-                        .then( () => {
-                            this.$router.push("/");
-                        }).catch( () => {});
+                        .then(() => {
+                             this.$router.push("/");
+                        }).catch(() => {
+                    });
                 }
             }
         },

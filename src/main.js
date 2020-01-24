@@ -4,6 +4,7 @@ import router from "./router";
 import vuetify from "./plugins/vuetify";
 import store from "./store";
 import firebase from "firebase";
+import User from "@/dto/user";
 
 Vue.config.productionTip = false;
 
@@ -24,5 +25,11 @@ new Vue({
                 appId: process.env.VUE_APP_FIREBASE_APP_ID,
             }
         );
+        firebase.auth().onAuthStateChanged(user => {
+            const uid = user ? user.uid : null;
+            this.$store.dispatch("user", new User(uid));
+        });
+
+
     },
 }).$mount("#app");
