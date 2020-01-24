@@ -33,6 +33,8 @@
 </template>
 
 <script>
+    import dtoAd from "@/dto/dtoAdv";
+
     export default {
         name: "NewAd",
         data: () => ({
@@ -48,7 +50,7 @@
             doSave() {
                 if (this.$refs.form.validate()) {
                     const image = "https://klike.net/uploads/posts/2019-01/1547365376_1.jpg";
-                    const dtoAdv = new dtoAdv();
+                    const dtoAdv = new dtoAd();
                     dtoAdv.title = this.title;
                     dtoAdv.desc = this.desc;
                     dtoAdv.promo = this.promo;
