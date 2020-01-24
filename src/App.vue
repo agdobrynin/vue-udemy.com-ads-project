@@ -9,8 +9,14 @@
                         v-icon {{ item.icon }}
                     v-list-item-content
                         v-list-item-title {{ item.title }}
+                v-list-item-content(v-if="userEmail")
+                    v-list-item-title
+                        v-chip.ma-2(color='indigo' text-color='white')
+                            v-avatar(left='')
+                                v-icon mdi-account-circle
+                            | {{ userEmail }}
         v-app-bar(app dense dark color="primary")
-            v-app-bar-nav-icon(@click="navigationDrawer = !navigationDrawer" class="hidden-md-and-up")
+            v-app-bar-nav-icon.hidden-md-and-up(@click="navigationDrawer = !navigationDrawer")
             v-toolbar-title
                 router-link(:to="{name: 'home'}" tag="span" class="pointer")
                     | Доска объявлений
@@ -21,8 +27,11 @@
                 class="hidden-sm-and-down")
                 v-icon(left) {{ item.icon }}
                 | {{ item.title }}
-            v-btn(v-if="userEmail" class="hidden-sm-and-down" text="") {{ userEmail }}
-
+            v-row.spacer.hidden-sm-and-down(v-if="userEmail")
+                v-chip.ma-2(color='indigo' text-color='white')
+                    v-avatar(left='')
+                        v-icon mdi-account-circle
+                    | {{ userEmail }}
 
         v-content
             router-view
