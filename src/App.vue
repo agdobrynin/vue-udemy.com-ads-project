@@ -21,6 +21,9 @@
                 class="hidden-sm-and-down")
                 v-icon(left) {{ item.icon }}
                 | {{ item.title }}
+            v-btn(v-if="userEmail" class="hidden-sm-and-down" text="") {{ userEmail }}
+
+
         v-content
             router-view
         v-footer(app) &copy; 2020
@@ -83,6 +86,7 @@
         computed: {
             error: (self) => self.$store.getters.error,
             menuLinks: (self) => self.menu.filter( menuItem => menuItem.auth === self.$store.getters.isUserLogin),
+            userEmail: (self) => self.$store.getters.user.id ? self.$store.getters.user.email : "",
         },
         methods: {
             closeError() {

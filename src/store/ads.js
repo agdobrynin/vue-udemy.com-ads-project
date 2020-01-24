@@ -41,21 +41,14 @@ export default {
                 commit("setLoading", false);
             }
         },
-        async newAdv({ commit, getters }, payload) {
-            payload.id = parseInt('' + Math.random() * 10000);
+        async newAdv({ commit }, dtoADv) {
             commit("setClearError");
             commit("setLoading", true);
             try {
-                const Adv = new dtoAdv();
-                Adv.title = payload.title;
-                Adv.desc = payload.desc;
-                Adv.promo = payload.promo;
-                Adv.image = payload.image;
-                Adv.userId = getters.user.id || null;
                 // TODO вынести в констату приложения имя БД
-                const newAdv = await firebase.database().ref("ads").push(Adv);
-                Adv.id = newAdv.key;
-                commit("setAdv", Adv);
+                const newAdv = await firebase.database().ref("ads").push(dtoADv);
+                dtoADv.id = newAdv.key;
+                commit("setAdv", dtoADv);
             } catch (error) {
                 commit("setError", error.message);
                 throw error;
@@ -67,7 +60,7 @@ export default {
     getters: {
         adsAll: (state) => state.ads,
         adsPromo: (state) => state.ads.filter( adv => adv.promo ),
-        adsOwner: (state) => userId => state.ads.filter( adv =>  adv.userId === userId),
+        adsOwnerList: (state) => userId => state.ads.filter( adv =>  adv.userId === userId),
         advById: (state) =>  adId => state.ads.find( adv => adv.id === adId),
     },
 }

@@ -28,7 +28,10 @@ new Vue({
         );
         firebase.auth().onAuthStateChanged(user => {
             const uid = user ? user.uid : null;
-            this.$store.dispatch("user", new dtoUser(uid));
+            const email = user ? user.email : null;
+            const dtoUsr = new dtoUser(uid);
+            dtoUsr.email = email;
+            this.$store.dispatch("user", dtoUsr);
         });
 
         this.$store.dispatch("fetchAds");

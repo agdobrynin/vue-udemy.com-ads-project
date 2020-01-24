@@ -3,12 +3,12 @@
         h1 Список моих объявлений
         v-layout(grid-list-lg)
             v-layout(row wrap)
-                v-flex(v-for="(adv, index) in adsOwner" :key="index" xs12 sm6 md4 pa-5)
+                v-flex(v-for="(adv, index) in adsOwnerList" :key="index" xs12 sm6 md4 pa-5)
                     v-card.mx-auto.d-flex.flex-column(max-width="400" min-height="500"
                         :to="{name: 'oneAdv', params:{id: adv.id}}")
                         v-img(:src="adv.image" height='200px')
                         v-card-title {{ adv.title }}
-                        v-card-subtitle {{ adv.date }}
+                        v-card-subtitle {{ adv.date | dateLocale }}
                         v-card-text {{ adv.desc.slice(0, 100) }}&hellip;
                         v-card-actions
                             v-spacer
@@ -19,7 +19,7 @@
     export default {
         name: "ListAds",
         computed: {
-            adsOwner: self => self.$store.getters.adsOwner(self.$store.getters.user.id),
+            adsOwnerList: self => self.$store.getters.adsOwnerList(self.$store.getters.user.id),
         },
     }
 </script>

@@ -47,13 +47,14 @@
         methods: {
             doSave() {
                 if (this.$refs.form.validate()) {
-                    const dataAdv = {
-                        title: this.title,
-                        desc: this.desc,
-                        promo: this.promo,
-                        image: "https://klike.net/uploads/posts/2019-01/1547365376_1.jpg",
-                    };
-                    this.$store.dispatch("newAdv", dataAdv).then( ()=> {
+                    const image = "https://klike.net/uploads/posts/2019-01/1547365376_1.jpg";
+                    const dtoAdv = new dtoAdv();
+                    dtoAdv.title = this.title;
+                    dtoAdv.desc = this.desc;
+                    dtoAdv.promo = this.promo;
+                    dtoAdv.image = image;
+                    dtoAdv.userId = this.$store.getters.user.id || null;
+                    this.$store.dispatch("newAdv", dtoAdv).then( ()=> {
                         this.$router.push({name: "listAds"});
                     }).catch( () => {});
                 }

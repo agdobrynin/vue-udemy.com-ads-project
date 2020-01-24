@@ -36,14 +36,14 @@ const routes = [
         path: "/listads",
         title: "Список моих объявлений",
         name: "listAds",
-        component: () => import(/* webpackChunkName: "listAds" */ "@/components/Ads/ListAds"),
+        component: () => import(/* webpackChunkName: "myAds" */ "@/components/Ads/MyAds"),
         beforeEnter: AuthGuard,
     },
     {
         path: "/adv/:id",
         name: "oneAdv",
         props: true,
-        component: () => import(/* webpackChunkName: "oneAdv" */ "@/components/Ads/OneAd"),
+        component: () => import(/* webpackChunkName: "viewAdv" */ "@/components/Ads/ViewAd"),
     },
     {
         path: "/orders",
