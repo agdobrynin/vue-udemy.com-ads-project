@@ -3,7 +3,7 @@ import firebase from "firebase";
 
 export default {
     state: {
-        user: new dtoUser(null),
+        user: new dtoUser(),
     },
     mutations: {
         user: (state, payload) => state.user = payload,

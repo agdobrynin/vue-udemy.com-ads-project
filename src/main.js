@@ -26,11 +26,8 @@ new Vue({
                 appId: process.env.VUE_APP_FIREBASE_APP_ID,
             }
         );
-        firebase.auth().onAuthStateChanged(user => {
-            const uid = user ? user.uid : null;
-            const email = user ? user.email : null;
-            const dtoUsr = new dtoUser(uid);
-            dtoUsr.email = email;
+        firebase.auth().onAuthStateChanged( user => {
+            const dtoUsr = new dtoUser(user);
             this.$store.dispatch("user", dtoUsr);
         });
 
