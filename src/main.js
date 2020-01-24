@@ -5,6 +5,7 @@ import vuetify from "./plugins/vuetify";
 import store from "./store";
 import firebase from "firebase";
 import dtoUser from "@/dto/dtoUser";
+import "@/filters";
 
 Vue.config.productionTip = false;
 

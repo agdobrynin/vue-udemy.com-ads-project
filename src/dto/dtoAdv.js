@@ -7,6 +7,6 @@ export default class dtoAdv {
         this.promo = promo;
         this.image = image;
         this.userId = userId;
-        this.date = date || new Date(date).toISOString();
+        this.date = date || new Date().toISOString();
     }
 }

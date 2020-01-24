@@ -19,7 +19,7 @@
                         v-img.white--text.align-end(height="200px" :src="adv.image")
                             v-card-title(class="card__title_bg")
                                 span.white--text {{ adv.title }}
-                        v-card-subtitle.pb-0 {{ adv.date }}
+                        v-card-subtitle.pb-0 {{ adv.date | dateLocale }}
                         v-card-text.text--primary
                             div {{adv.desc.slice(0,75)}}&hellip;
                         v-card-actions(align-end)
