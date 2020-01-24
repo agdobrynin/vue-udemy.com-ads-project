@@ -8,9 +8,9 @@
                         :to="{name: 'oneAdv', params:{id: adv.id}}"
                         class="buttonGoto" absolute bottom right)
                         | Просмотр
-                    v-sheet(:color="adv.color || 'primary'" height="auto")
+                    v-sheet(color="primary" height="auto")
                         v-row.fill-height(align="center" justify="center")
-                            .display-3.text-truncate.mx-5 {{ adv.title }}
+                            .display-3.text-truncate.px-5.py-3 {{ adv.title }}
 
         v-container(grid-list-lg)
             v-layout(row wrap v-if="adsList.length")
