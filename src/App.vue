@@ -27,11 +27,12 @@
 
         v-snackbar(
             v-if="error"
+            color="cyan darken-2"
             :timeout="8000"
             :value="true"
             @click="closeError"
             multi-line=true) {{ error }}
-            v-btn(color="red" text="" @click.native="closeError") Закрыть
+            v-btn(color="error" @click.native="closeError") Закрыть
 </template>
 
 <script>
