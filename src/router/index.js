@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router"
 import Home from "@/components/Home";
+import AuthGuard from "./auth-guard";
 
 Vue.use(Router);
 const routes = [
@@ -26,13 +27,17 @@ const routes = [
     },
     {
         path: "/newadv",
+        title: "Добавить объявление",
         name: "newAdv",
         component: () => import(/* webpackChunkName: "newAdv" */ "@/components/Ads/NewAd"),
+        beforeEnter: AuthGuard,
     },
     {
         path: "/listads",
+        title: "Список моих объявлений",
         name: "listAds",
         component: () => import(/* webpackChunkName: "listAds" */ "@/components/Ads/ListAds"),
+        beforeEnter: AuthGuard,
     },
     {
         path: "/adv/:id",
@@ -42,8 +47,10 @@ const routes = [
     },
     {
         path: "/orders",
+        title: "Заказы на покупку",
         name: "orders",
         component: () => import(/* webpackChunkName: "orders" */ "@/components/User/Orders"),
+        beforeEnter: AuthGuard,
     },
     // Page not found
     {
