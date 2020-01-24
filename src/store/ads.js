@@ -30,8 +30,6 @@ export default {
                         newAdv.image = ads[key].image;
                         newAdv.userId = ads[key].userId;
                         newAdv.date = ads[key].date;
-                        // eslint-disable-next-line no-console
-                        console.log(newAdv.dateLocateString());
                         commit("setAdv", newAdv);
                     });
                 }
