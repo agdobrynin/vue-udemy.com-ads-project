@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import firebase from "firebase";
-import Ad from "@/dto/adv";
+import dtoAdv from "@/dto/dtoAdv";
 
 export default {
     state: {
@@ -22,14 +22,15 @@ export default {
                 const ads = adsPromise.val();
                 if (ads) {
                     Object.keys(ads).forEach( key => {
-                        const newAdv = new Ad();
+                        const {title, desc, promo, image, userId, date} = ads[key];
+                        const newAdv = new dtoAdv();
                         newAdv.id = key;
-                        newAdv.title = ads[key].title;
-                        newAdv.desc = ads[key].desc;
-                        newAdv.promo = ads[key].promo;
-                        newAdv.image = ads[key].image;
-                        newAdv.userId = ads[key].userId;
-                        newAdv.date = ads[key].date;
+                        newAdv.title = title;
+                        newAdv.desc = desc;
+                        newAdv.promo = promo;
+                        newAdv.image = image;
+                        newAdv.userId = userId;
+                        newAdv.date = date;
                         commit("setAdv", newAdv);
                     });
                 }
@@ -45,7 +46,7 @@ export default {
             commit("setClearError");
             commit("setLoading", true);
             try {
-                const Adv = new Ad();
+                const Adv = new dtoAdv();
                 Adv.title = payload.title;
                 Adv.desc = payload.desc;
                 Adv.promo = payload.promo;

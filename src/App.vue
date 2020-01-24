@@ -61,7 +61,7 @@
                     auth: true,
                 },
                 {
-                    icon: "mdi-format-menuLinks-checkbox",
+                    icon: "mdi-card-text-outline",
                     title: "Мои объявления",
                     url: "/listads",
                     auth: true,

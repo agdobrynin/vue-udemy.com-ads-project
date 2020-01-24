@@ -1,9 +1,9 @@
-import User from "@/dto/user";
+import dtoUser from "@/dto/dtoUser";
 import firebase from "firebase";
 
 export default {
     state: {
-        user: new User(null),
+        user: new dtoUser(null),
     },
     mutations: {
         user: (state, payload) => state.user = payload,
@@ -41,7 +41,7 @@ export default {
             commit("setLoading", true);
             try {
                 await firebase.auth().signOut();
-                commit("user", new User());
+                commit("user", new dtoUser());
             } catch (error) {
                 commit("setError", error.message);
                 throw error;
