@@ -1,46 +1,39 @@
+// eslint-disable-next-line no-unused-vars
+import firebase from "firebase";
+import Ad from "@/dto/adv";
+
 export default {
     state: {
         ads: [
-            {
-                imageSrc: "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
-                title: "Lorem ipsum.",
-                date: "20.01.2020",
-                desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, quos!",
-                color: "indigo",
-                id: 123,
-                promo: true,
-                userId: 1,
-            },
-            {
-                imageSrc: "https://cdn.vuetifyjs.com/images/cards/house.jpg",
-                title: "Ipsum dolor consectetur.",
-                date: "18.01.2020",
-                desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet corporis deleniti inventore ipsam iure molestias, odit, quasi quod, ratione rerum sint.",
-                id: 789,
-                promo: false,
-                userId: 2,
-            },
-            {
-                imageSrc: "https://cdn.vuetifyjs.com/images/cards/road.jpg",
-                title: "Lorem dolor amet.",
-                date: "15.01.2020",
-                desc: "Eos, quos! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet corporis deleniti inventore ipsam iure molestias, odit, quasi quod, ratione rerum sint.",
-                color: "deep-purple accent-4",
-                id: 9654,
-                promo: true,
-                userId: 1,
-            },
         ]
     },
     mutations: {
-        setNewAdv(state, payload) {
+        setAdv(state, payload) {
             state.ads.push(payload);
         },
     },
     actions: {
-        actionNewAdv({ commit }, payload) {
+        async actionNewAdv({ commit, getters }, payload) {
             payload.id = parseInt('' + Math.random() * 10000);
-            commit("setNewAdv", payload);
+            commit("setClearError");
+            commit("setLoading", true);
+            try {
+                const Adv = new Ad();
+                Adv.title = payload.title;
+                Adv.desc = payload.desc;
+                Adv.promo = payload.promo;
+                Adv.image = payload.image;
+                Adv.userId = getters.user.id || null;
+                // TODO вынести в констату приложения имя БД
+                const newAdv = await firebase.database().ref("ads").push(Adv);
+                Adv.id = newAdv.key;
+                commit("setAdv", Adv);
+            } catch (error) {
+                commit("setError", error.message);
+                throw error;
+            } finally {
+                commit("setLoading", false);
+            }
         },
     },
     getters: {

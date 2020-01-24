@@ -22,7 +22,11 @@
                             v-file-input(accept="image/*" label="Файл объявления")
                             v-card-actions
                                 v-spacer
-                                v-btn(color="primary" :disabled="!valid" @click="doSave")
+                                v-btn(
+                                    color="primary"
+                                    :disabled="!valid || loading"
+                                    :loading="loading"
+                                    @click="doSave")
                                     v-icon mdi-content-save-move
                                     | Сохранить
 
@@ -47,12 +51,16 @@
                         title: this.title,
                         desc: this.desc,
                         promo: this.promo,
-                        date: new Date().toLocaleString("ru"),
-                        imageSrc: "https://klike.net/uploads/posts/2019-01/1547365376_1.jpg",
+                        image: "https://klike.net/uploads/posts/2019-01/1547365376_1.jpg",
                     };
-                    this.$store.dispatch('actionNewAdv', dataAdv);
+                    this.$store.dispatch("actionNewAdv", dataAdv).then( ()=> {
+                        this.$router.push({name: "listAds"});
+                    }).catch( () => {});
                 }
             },
+        },
+        computed: {
+            loading: (self) => self.$store.getters.loading,
         },
     }
 </script>

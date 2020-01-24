@@ -30,6 +30,5 @@ new Vue({
             this.$store.dispatch("user", new User(uid));
         });
 
-
     },
 }).$mount("#app");

@@ -6,7 +6,7 @@
                 v-flex(v-for="(adv, index) in adsOwner" :key="index" xs12 sm6 md4 pa-5)
                     v-card.mx-auto.d-flex.flex-column(max-width="400" min-height="500"
                         :to="{name: 'oneAdv', params:{id: adv.id}}")
-                        v-img(:src="adv.imageSrc" height='200px')
+                        v-img(:src="adv.image" height='200px')
                         v-card-title {{ adv.title }}
                         v-card-subtitle {{ adv.date }}
                         v-card-text {{ adv.desc.slice(0, 100) }}&hellip;
@@ -18,11 +18,8 @@
 <script>
     export default {
         name: "ListAds",
-        data: () => ({
-            userId: 1,
-        }),
         computed: {
-            adsOwner: self => self.$store.getters.adsOwner(self.userId),
+            adsOwner: self => self.$store.getters.adsOwner(self.$store.getters.user.id),
         },
     }
 </script>

@@ -1,8 +1,8 @@
 <template lang="pug">
     div
-        v-container
+        v-container(v-if="promoAds.length")
             v-carousel(cycle="" height="400" hide-delimiter-background="" show-arrows-on-hover="")
-                v-carousel-item(v-for="(adv, index) in promoAds" :key="index" :src="adv.imageSrc" progress touch)
+                v-carousel-item(v-for="(adv, index) in promoAds" :key="index" :src="adv.image" progress touch)
                     v-btn(
                         :to="{name: 'oneAdv', params:{id: adv.id}}"
                         class="buttonGoto" absolute bottom right)
@@ -12,10 +12,10 @@
                             .display-3.text-truncate.mx-5 {{ adv.title }}
 
         v-container(grid-list-lg)
-            v-layout(row wrap)
+            v-layout(row wrap v-if="adsList.length")
                 v-flex(v-for="(adv, index) in adsList" :key="index" xs12 sm6 md4)
                     v-card.mx-auto.d-flex.flex-column(max-width="400" min-height="400")
-                        v-img.white--text.align-end(height="200px" :src="adv.imageSrc")
+                        v-img.white--text.align-end(height="200px" :src="adv.image")
                             v-card-title(class="card__title_bg")
                                 span.white--text {{ adv.title }}
                         v-card-subtitle.pb-0 {{ adv.date }}
@@ -24,6 +24,9 @@
                         v-card-actions(align-end)
                             v-btn(bottom color="info" :to="{name: 'oneAdv', params:{id: adv.id}}") Просмотр
                             v-btn(bottom color="success") Купить
+            v-flex(v-else)
+                v-alert(outlined='' type='warning' prominent='' border='left')
+                    | В базе не найдено объявлений
 
 
 </template>
