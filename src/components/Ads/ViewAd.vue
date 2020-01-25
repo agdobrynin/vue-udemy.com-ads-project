@@ -7,7 +7,7 @@
             v-card-text.adv__desc {{ adv.desc }}
             v-card-actions
                 v-spacer
-                v-btn.v-btn--flat(v-if="isOwner") Редактировать
+                v-btn.v-btn--flat(v-if="isOwner" :to="{name: 'editAdv', params:{id: adv.id}}") Редактировать
                 v-btn.success() Купить
 </template>
 
