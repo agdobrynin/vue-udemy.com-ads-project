@@ -41,14 +41,20 @@ export default {
                 commit("setLoading", false);
             }
         },
-        async newAdv({ commit }, dtoADv) {
+        async newAdv({ commit }, newAdvWithImageBlob) {
             commit("setClearError");
             commit("setLoading", true);
+            const dtoADV = newAdvWithImageBlob.dtoADV;
+            const imageBlob = newAdvWithImageBlob.imageBlob;
             try {
                 // TODO вынести в констату приложения имя БД
-                const newAdv = await firebase.database().ref("ads").push(dtoADv);
-                dtoADv.id = newAdv.key;
-                commit("setAdv", dtoADv);
+                const newAdv = await firebase.database().ref("ads").push(dtoADV);
+                dtoADV.id = newAdv.key;
+                // TODO вынести в констату приложения имя Хранилища картинок
+                const imageStorageResult = await firebase.storage().ref(`ads/${dtoADV.id}`)
+                    .put(imageBlob, {contentType: imageBlob.type});
+                dtoADV.image = await imageStorageResult.ref.getDownloadURL();
+                commit("setAdv", dtoADV);
             } catch (error) {
                 commit("setError", error.message);
                 throw error;

@@ -20,8 +20,8 @@
                             v-label
                                 v-switch(v-model="promo" label="Показывать в карусели" color="primary")
                             v-file-input(
-                                v-model="image"
-                                name="advImage"
+                                v-model="imageBlob"
+                                name="imageBlob"
                                 accept="image/*"
                                 label="Файл изображения"
                                 show-size
@@ -35,7 +35,7 @@
                                 v-spacer
                                 v-btn(
                                     color="primary"
-                                    :disabled="!valid || loading || !image"
+                                    :disabled="!valid || loading || !imageBlob"
                                     :loading="loading"
                                     @click="doSave")
                                     v-icon mdi-content-save-move
@@ -53,7 +53,7 @@
             title: "",
             desc: "",
             promo: false,
-            image: null,
+            imageBlob: null,
             imageSrc: "",
             imageLocalLoading: false,
             rulesRequire: [
@@ -62,26 +62,27 @@
         }),
         methods: {
             doSave() {
-                if (this.$refs.form.validate() && this.image) {
+                if (this.$refs.form.validate() && this.imageBlob) {
                     const dtoAdv = new dtoAd();
                     dtoAdv.title = this.title;
                     dtoAdv.desc = this.desc;
                     dtoAdv.promo = this.promo;
-                    dtoAdv.image = this.image;
                     dtoAdv.userId = this.$store.getters.user.id || null;
-                    this.$store.dispatch("newAdv", dtoAdv).then( ()=> {
+                    const advNew = {
+                        dtoADV: dtoAdv,
+                        imageBlob: this.imageBlob,
+                    };
+                    this.$store.dispatch("newAdv", advNew).then( ()=> {
                         this.$router.push({name: "listAds"});
                     }).catch( () => {});
                 }
             },
             fileUpload(file) {
-                // eslint-disable-next-line no-console
-                // console.log(this.image);
-                this.image = file;
+                this.imageBlob = file;
                 this.imageLocalLoading = true;
-                if (this.image) {
+                if (this.imageBlob) {
                     const fileReader = new FileReader();
-                    fileReader.readAsDataURL(this.image);
+                    fileReader.readAsDataURL(this.imageBlob);
                     fileReader.addEventListener('load', () => {
                         this.imageSrc = fileReader.result;
                         this.imageLocalLoading = false;

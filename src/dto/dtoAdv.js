@@ -1,6 +1,6 @@
 export default class dtoAdv {
 
-    constructor(title, desc, promo, image, userId = null, id = null, date = null) {
+    constructor(title, desc, promo, image = "", userId = null, id = null, date = null) {
         this.id = id;
         this.title = title;
         this.desc = desc;
