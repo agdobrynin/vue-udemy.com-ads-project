@@ -52,43 +52,43 @@
 
     export default {
         name: "App",
-        data: () => ({
+        data: (self) => ({
             navigationDrawer: false,
             menu: [
                 {
                     icon: "mdi-lock",
                     title: "Вход",
-                    url: "/login",
+                    url: self.$router.resolve({name: "login"}).href,
                     auth: false,
                 },
                 {
                     icon: "mdi-account-plus",
                     title: "Регистрация",
-                    url: "/registration",
+                    url: self.$router.resolve({name: "registration"}).href,
                     auth: false,
                 },
                 {
                     icon: "mdi-newspaper-plus",
                     title: "Новое объявление",
-                    url: "/newadv",
+                    url: self.$router.resolve({name: "editAdv"}).href,
                     auth: true,
                 },
                 {
                     icon: "mdi-card-text-outline",
                     title: "Мои объявления",
-                    url: "/listads",
+                    url: self.$router.resolve({name: "listAds"}).href,
                     auth: true,
                 },
                 {
                     icon: "mdi-cash-multiple",
                     title: "Заказы на покупку",
-                    url: "/orders",
+                    url: self.$router.resolve({name: "orders"}).href,
                     auth: true,
                 },
                 {
                     icon: "mdi-logout",
                     title: "Выход",
-                    url: "/logout",
+                    url: self.$router.resolve({name: "logout"}).href,
                     auth: true,
                 },
             ],
