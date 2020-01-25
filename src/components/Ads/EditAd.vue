@@ -8,6 +8,7 @@
                     v-spacer
                     v-card-text
                         v-form(v-model="valid" ref="form" validate @submit.prevent="")
+                            input(type="hidden" value="id")
                             v-text-field(
                                 label="Заголовок" type="text" name="title" v-model="title"
                                 prepend-icon="mdi-page-layout-header"
@@ -35,7 +36,7 @@
                                 v-spacer
                                 v-btn(
                                     color="primary"
-                                    :disabled="!valid || loading || !imageBlob"
+                                    :disabled="!valid || loading || !imageSrc"
                                     :loading="loading"
                                     @click="doSave")
                                     v-icon mdi-content-save-move
@@ -47,9 +48,10 @@
     import dtoAd from "@/dto/dtoAdv";
 
     export default {
-        name: "NewAd",
+        name: "EditAd",
         data: () => ({
             valid: false,
+            id: null,
             title: "",
             desc: "",
             promo: false,
@@ -62,19 +64,29 @@
         }),
         methods: {
             doSave() {
-                if (this.$refs.form.validate() && this.imageBlob) {
+                if (this.$refs.form.validate()) {
                     const dtoAdv = new dtoAd();
+                    dtoAdv.id = this.id;
                     dtoAdv.title = this.title;
                     dtoAdv.desc = this.desc;
                     dtoAdv.promo = this.promo;
                     dtoAdv.userId = this.$store.getters.user.id || null;
+                    dtoAdv.image = this.imageSrc;
                     const advNew = {
                         dtoADV: dtoAdv,
                         imageBlob: this.imageBlob,
                     };
-                    this.$store.dispatch("newAdv", advNew).then( ()=> {
-                        this.$router.push({name: "listAds"});
-                    }).catch( () => {});
+                    if (dtoAdv.id) {
+                        this.$store.dispatch("updateAdv", advNew).then(() => {
+                            this.$router.push({name: "listAds"});
+                        }).catch(() => {
+                        });
+                    } else {
+                        this.$store.dispatch("newAdv", advNew).then(() => {
+                            this.$router.push({name: "listAds"});
+                        }).catch(() => {
+                        });
+                    }
                 }
             },
             fileUpload(file) {
@@ -96,6 +108,15 @@
         computed: {
             loading: (self) => self.$store.getters.loading,
         },
+        created() {
+            const advId = this.$route.params.id;
+            const {id, title, desc, promo, image} = this.$store.getters.advById(advId);
+            this.id = id || null;
+            this.title = title || "";
+            this.desc = desc || "";
+            this.promo = promo || false;
+            this.imageSrc = image || "";
+        }
     }
 </script>
 
