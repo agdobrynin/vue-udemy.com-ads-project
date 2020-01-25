@@ -48,12 +48,14 @@ export default {
             const imageBlob = newAdvWithImageBlob.imageBlob;
             try {
                 // TODO вынести в констату приложения имя БД
-                const newAdv = await firebase.database().ref("ads").push(dtoADV);
+                const database = firebase.database().ref("ads");
+                const newAdv = await database.push(dtoADV);
                 dtoADV.id = newAdv.key;
                 // TODO вынести в констату приложения имя Хранилища картинок
                 const imageStorageResult = await firebase.storage().ref(`ads/${dtoADV.id}`)
                     .put(imageBlob, {contentType: imageBlob.type});
                 dtoADV.image = await imageStorageResult.ref.getDownloadURL();
+                await database.child(dtoADV.id).update({image: dtoADV.image});
                 commit("setAdv", dtoADV);
             } catch (error) {
                 commit("setError", error.message);
