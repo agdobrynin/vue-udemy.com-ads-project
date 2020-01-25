@@ -2,8 +2,8 @@
     v-container
         h1 Список моих объявлений
         v-layout(grid-list-lg)
-            v-layout(row wrap)
-                v-flex(v-for="(adv, index) in adsOwnerList" :key="index" xs12 sm6 md4 pa-5)
+            v-layout(v-if="adsOwnerList.length" row wrap)
+                v-flex( v-for="(adv, index) in adsOwnerList" :key="index" xs12 sm6 md4 pa-5)
                     v-card.mx-auto.d-flex.flex-column(max-width="400" min-height="500"
                         :to="{name: 'oneAdv', params:{id: adv.id}}")
                         v-img(:src="adv.image" height='200px')
@@ -13,6 +13,9 @@
                         v-card-actions
                             v-spacer
                             v-btn(right color='purple' text='' :to="{name: 'oneAdv', params:{id: adv.id}}") Open
+            v-layout(v-else)
+                v-flex
+                    v-toolbar-title У вас пока нет объявлений
 </template>
 
 <script>
