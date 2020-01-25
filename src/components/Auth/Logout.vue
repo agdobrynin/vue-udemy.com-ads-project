@@ -8,7 +8,7 @@
         beforeRouteEnter (to, from, next) {
             next( vm => {
                 vm.$store.dispatch("actionUserLogout");
-                vm.$router.push("/");
+                vm.$router.push({name: "home"});
             });
         }
     }
