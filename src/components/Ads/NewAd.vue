@@ -19,12 +19,23 @@
                                 :rules="rulesRequire")
                             v-label
                                 v-switch(v-model="promo" label="Показывать в карусели" color="primary")
-                            v-file-input(accept="image/*" label="Файл объявления")
+                            v-file-input(
+                                v-model="image"
+                                name="advImage"
+                                accept="image/*"
+                                label="Файл изображения"
+                                show-size
+                                chips
+                                prepend-icon="mdi-camera"
+                                :loading="imageLocalLoading"
+                                :disabled="imageLocalLoading"
+                                @change="fileUpload")
+                            v-img(v-if="imageSrc" aspect-ratio="2" :src="imageSrc")
                             v-card-actions
                                 v-spacer
                                 v-btn(
                                     color="primary"
-                                    :disabled="!valid || loading"
+                                    :disabled="!valid || loading || !image"
                                     :loading="loading"
                                     @click="doSave")
                                     v-icon mdi-content-save-move
@@ -42,23 +53,42 @@
             title: "",
             desc: "",
             promo: false,
+            image: null,
+            imageSrc: "",
+            imageLocalLoading: false,
             rulesRequire: [
                 v => !!v || "Обязательное поле",
             ],
         }),
         methods: {
             doSave() {
-                if (this.$refs.form.validate()) {
-                    const image = "https://klike.net/uploads/posts/2019-01/1547365376_1.jpg";
+                if (this.$refs.form.validate() && this.image) {
                     const dtoAdv = new dtoAd();
                     dtoAdv.title = this.title;
                     dtoAdv.desc = this.desc;
                     dtoAdv.promo = this.promo;
-                    dtoAdv.image = image;
+                    dtoAdv.image = this.image;
                     dtoAdv.userId = this.$store.getters.user.id || null;
                     this.$store.dispatch("newAdv", dtoAdv).then( ()=> {
                         this.$router.push({name: "listAds"});
                     }).catch( () => {});
+                }
+            },
+            fileUpload(file) {
+                // eslint-disable-next-line no-console
+                // console.log(this.image);
+                this.image = file;
+                this.imageLocalLoading = true;
+                if (this.image) {
+                    const fileReader = new FileReader();
+                    fileReader.readAsDataURL(this.image);
+                    fileReader.addEventListener('load', () => {
+                        this.imageSrc = fileReader.result;
+                        this.imageLocalLoading = false;
+                    });
+                } else {
+                    this.imageSrc = null;
+                    this.imageLocalLoading = false;
                 }
             },
         },
