@@ -26,10 +26,10 @@ const routes = [
         component: () => import(/* webpackChunkName: "registration" */ "@/components/Auth/Registration"),
     },
     {
-        path: "/newadv",
+        path: "/editadv/:id?",
         meta: {title: "Добавить объявление"},
-        name: "newAdv",
-        component: () => import(/* webpackChunkName: "newAdv" */ "@/components/Ads/NewAd"),
+        name: "editAdv",
+        component: () => import(/* webpackChunkName: "editAdv" */ "@/components/Ads/EditAd"),
         beforeEnter: AuthGuard,
     },
     {
