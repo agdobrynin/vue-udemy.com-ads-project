@@ -18,12 +18,9 @@
                         v-list-item-title {{ item.title }}
 
         v-app-bar(app dense dark color="primary")
-            v-app-bar-nav-icon.hidden-md-and-up(@click="navigationDrawer = !navigationDrawer")
-            v-toolbar-title
-                router-link(:to="{name: 'home'}" tag="span" class="pointer")
-                    | Доска объявлений
+            v-app-bar-nav-icon.d-lg-none(@click="navigationDrawer = !navigationDrawer")
             v-spacer
-            v-toolbar-items.hidden-sm-and-down
+            v-toolbar-items.hidden-md-and-down
                 v-list-item(v-for="(item, index) in menuLinks" :key="index")
                     v-btn(text :to="item.url") {{ item.title }}
                         v-icon {{ item.icon }}
@@ -55,6 +52,11 @@
         data: (self) => ({
             navigationDrawer: false,
             menu: [
+                {
+                    icon: "mdi-home",
+                    title: "Все объявления",
+                    url: self.$router.resolve({name: "home"}).href,
+                },
                 {
                     icon: "mdi-lock",
                     title: "Вход",
@@ -95,7 +97,14 @@
         }),
         computed: {
             error: (self) => self.$store.getters.error,
-            menuLinks: (self) => self.menu.filter( menuItem => menuItem.auth === self.$store.getters.isUserLogin),
+            menuLinks () {
+                return this.menu.filter((menuItem) => {
+                    if (!menuItem.hasOwnProperty("auth")) {
+                        return true;
+                    }
+                    return menuItem.auth === this.$store.getters.isUserLogin;
+                });
+            },
             user: (self) => self.$store.getters.user,
         },
         methods: {
