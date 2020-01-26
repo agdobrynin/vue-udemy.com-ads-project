@@ -65,6 +65,11 @@
         methods: {
             doSave() {
                 if (this.$refs.form.validate()) {
+                    if (this.id && this.user.id !== this.userId) {
+                        const notOwner = "Вы не являетесь валадельцем реакитруемого объявления";
+                        this.$store.dispatch("actionError", notOwner);
+                        throw Error(notOwner);
+                    }
                     const dtoAdv = new dtoAd();
                     dtoAdv.id = this.id;
                     dtoAdv.title = this.title;
@@ -107,17 +112,19 @@
         },
         computed: {
             loading: (self) => self.$store.getters.loading,
+            user: (self) => self.$store.getters.user,
         },
         created() {
             const advId = this.$route.params.id || null;
             const adv = this.$store.getters.advById(advId);
             if (adv) {
-                const {id, title, desc, promo, image} = adv;
+                const {id, title, desc, promo, image, userId} = adv;
                 this.id = id || null;
                 this.title = title || "";
                 this.desc = desc || "";
                 this.promo = promo || false;
                 this.imageSrc = image || "";
+                this.userId = userId || this.$store.getters.user.id;
             }
         }
     }
