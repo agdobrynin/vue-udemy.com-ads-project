@@ -1,6 +1,6 @@
 <template lang="pug">
     v-container
-        v-card.mx-auto.d-flex.flex-column
+        v-card.mx-auto.d-flex.flex-column(v-if="!loading")
             v-img(:src="adv.image")
             v-card-title {{ adv.title }}
             v-card-subtitle {{ adv.date | dateLocale }}
@@ -22,6 +22,7 @@
         computed: {
             adv: self => self.$store.getters.advById(self.id),
             isOwner: self => self.$store.getters.user.id === self.adv.userId,
+            loading: self => self.$store.getters.loading,
         },
     }
 </script>

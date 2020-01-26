@@ -32,6 +32,7 @@
                         v-list-item-title {{ user.email }}
 
         v-content
+            v-progress-linear(v-if="loading" indeterminate color="cyan" height="50") Загрузка
             router-view
         v-footer(app) &copy; 2020
 
@@ -97,6 +98,7 @@
         }),
         computed: {
             error: (self) => self.$store.getters.error,
+            loading: self => self.$store.getters.loading,
             menuLinks () {
                 return this.menu.filter((menuItem) => {
                     if (!menuItem.hasOwnProperty("auth")) {
