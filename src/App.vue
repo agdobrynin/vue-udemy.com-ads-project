@@ -33,7 +33,7 @@
 
         v-content
             v-progress-linear(v-if="loading" indeterminate color="cyan" height="50") Загрузка
-            router-view
+            router-view(:key="$route.path")
         v-footer(app) &copy; 2020
 
         v-snackbar(
@@ -118,7 +118,5 @@
 </script>
 
 <style scoped>
-    .pointer {
-        cursor: pointer;
-    }
+
 </style>
