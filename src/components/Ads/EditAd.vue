@@ -1,5 +1,5 @@
 <template lang="pug">
-    v-container
+    v-container(v-if="!loading")
         v-row(align="center" justify="center")
             v-col(cols="12")
                 v-card(class="elevation-12")
@@ -109,13 +109,16 @@
             loading: (self) => self.$store.getters.loading,
         },
         created() {
-            const advId = this.$route.params.id;
-            const {id, title, desc, promo, image} = this.$store.getters.advById(advId);
-            this.id = id || null;
-            this.title = title || "";
-            this.desc = desc || "";
-            this.promo = promo || false;
-            this.imageSrc = image || "";
+            const advId = this.$route.params.id || null;
+            const adv = this.$store.getters.advById(advId);
+            if (adv) {
+                const {id, title, desc, promo, image} = adv;
+                this.id = id || null;
+                this.title = title || "";
+                this.desc = desc || "";
+                this.promo = promo || false;
+                this.imageSrc = image || "";
+            }
         }
     }
 </script>
