@@ -8,12 +8,17 @@
             v-card-actions
                 v-spacer
                 v-btn.v-btn--flat(v-if="isOwner" :to="{name: 'editAdv', params:{id: adv.id}}") Редактировать
-                v-btn.success() Купить
+                buy-ad(v-if="!isOwner" :adv="adv")
 </template>
 
 <script>
+    import BuyAd from "@/components/Shared/BuyAd";
+
     export default {
         name: "OneAd",
+        components: {
+            BuyAd,
+        },
         props: {
             id: {
                 required: true,

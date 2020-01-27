@@ -22,8 +22,10 @@
                         v-card-text.text--primary
                             div {{adv.desc.slice(0,75)}}&hellip;
                         v-card-actions(align-end)
+                            buy-ad(v-if="adv.userId !== user.id" :adv="adv")
+                            v-spacer
                             v-btn(bottom color="info" :to="{name: 'oneAdv', params:{id: adv.id}}") Просмотр
-                            v-btn(bottom color="success") Купить
+
             v-flex(v-else-if="!loading")
                 v-alert(outlined='' type='warning' prominent='' border='left' )
                     | В базе не найдено объявлений
@@ -32,12 +34,19 @@
 </template>
 
 <script>
+
+    import BuyAd from "@/components/Shared/BuyAd";
+
     export default {
         name: "Home",
+        components: {
+            BuyAd
+        },
         computed: {
             promoAds: self => self.$store.getters.adsPromo,
             adsList: self => self.$store.getters.adsAll,
             loading: self => self.$store.getters.loading,
+            user: self => self.$store.getters.user,
         },
     }
 </script>
