@@ -7,10 +7,10 @@
                         v-toolbar-title Заказы на покупку
                     v-list-item(v-for="(order, index) in orders" :key="orders.advId")
                         v-list-item-content
-                            v-alert(type="info")
+                            v-alert(:type="order.done ? 'success' : 'info'")
                                 v-list-item-title Имя: {{ order.name }}
                                 v-list-item-title Телефон: {{ order.phone }}
-                            v-alert(v-if="order.done" dense type="success") Покупка подтверждена
+                                v-list-item-title(v-if="order.done") Покупка подтверждена
                             short-adv.pa-0.ma-0(:adv="advById(order.advId)")
                             v-row
                                 v-col
