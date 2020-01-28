@@ -19,13 +19,7 @@
                                     label='Контактный телефон'
                                     v-model="phone"
                                     :rules="rulesRequire")
-                            v-col(cols='12')
-                                v-row
-                                    v-col.pt-10(cols='12' sm='4')
-                                        v-img(:src="adv.image" aspect-ratio="1.4")
-                                    v-col(cols='12' sm='8')
-                                        v-card-title {{ adv.title }}
-                                        v-card-text {{ shortDesc }}
+                            short-adv(:adv="adv")
             v-card-actions
                 v-spacer
                 v-btn(color='blue darken-1' text='' @click="doCancel") Отказаться
@@ -33,12 +27,15 @@
 </template>
 
 <script>
-    const LAX_LENGTH_DESC = 200;
     import dtoOrder from "@/dto/dtoOrder";
+    import ShortAdv from "@/components/Shared/ShortAdv";
 
     export default {
         name: "BuyAd",
         props: ["adv"],
+        components: {
+            ShortAdv
+        },
         data: () => ({
             dialog: false,
             valid: false,
@@ -50,7 +47,6 @@
             ],
         }),
         computed: {
-            shortDesc: (self) => self.adv.desc.slice(0,LAX_LENGTH_DESC) + (self.adv.desc.length > LAX_LENGTH_DESC ? "..." : ""),
             user: self => self.$store.getters.user,
         },
         methods: {

@@ -45,13 +45,26 @@ export default {
             commit("setClearError");
             try {
                 // TODO вынести в констату приложения имя БД
-                const database = await firebase.database().ref(`/users/${dtoOrder.ownerId}/orders`).push(dtoOrder);
-                await database.push(dtoOrder);
+                await firebase.database().ref(`/users/${dtoOrder.ownerId}/orders`).push(dtoOrder);
             } catch (error) {
                 commit("setError", error.message);
                 throw error;
             }
         },
+        async orderDone({commit}, dtoOrder) {
+            commit("setClearError");
+            try {
+                // TODO вынести в констату приложения имя БД
+                await firebase.database().ref(`/users/${dtoOrder.ownerId}/orders`)
+                    .child(dtoOrder.id)
+                    .update({
+                        done: true
+                    });
+            } catch (error) {
+                commit("setError", error.message);
+                throw error;
+            }
+        }
     },
     getters: {
         doneOrders: (state) => state.orders.filter( order => order.done === true),
