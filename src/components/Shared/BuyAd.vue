@@ -11,13 +11,15 @@
                         v-row
                             v-col(cols='12' sm='6')
                                 v-text-field(
-                                    label='Ваше имя'
+                                    label="Ваше имя"
                                     v-model="name"
+                                    prepend-inner-icon="mdi-account"
                                     :rules="rulesRequire")
                             v-col(cols='12' sm='6')
                                 v-text-field(
-                                    label='Контактный телефон'
+                                    label="Контактный телефон"
                                     v-model="phone"
+                                    prepend-inner-icon="mdi-cellphone-basic"
                                     :rules="rulesRequire")
                             short-adv(:adv="adv")
             v-card-actions
