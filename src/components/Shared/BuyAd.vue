@@ -2,7 +2,7 @@
     v-dialog(v-model="dialog" persistent max-width="600px")
         template(v-slot:activator='{ on }')
             v-btn(color='green' dark='' v-on='on') Купить
-        v-card
+        v-card(:loading="localLoading" :disabled="localLoading")
             v-card-title
                 span.headline Оформить покупку
             v-card-text
@@ -29,10 +29,13 @@
             v-card-actions
                 v-spacer
                 v-btn(color='blue darken-1' text='' @click="doCancel") Отказаться
-                v-btn(color='blue darken-1' text='' @click="doSave") Купить
+                v-btn(color='blue darken-1' text='' @click="doSave" :disabled="!valid") Купить
 </template>
 
 <script>
+    const LAX_LENGTH_DESC = 200;
+    import dtoOrder from "@/dto/dtoOrder";
+
     export default {
         name: "BuyAd",
         props: ["adv"],
@@ -41,12 +44,14 @@
             valid: false,
             name: "",
             phone: "",
+            localLoading: false,
             rulesRequire: [
                 v => !!v || "Обязательное поле",
             ],
         }),
         computed: {
-            shortDesc: (self) => self.adv.desc.slice(0,200) + (self.adv.desc.length > 200 ? "..." : ""),
+            shortDesc: (self) => self.adv.desc.slice(0,LAX_LENGTH_DESC) + (self.adv.desc.length > LAX_LENGTH_DESC ? "..." : ""),
+            user: self => self.$store.getters.user,
         },
         methods: {
             doCancel() {
@@ -56,9 +61,21 @@
             },
             doSave() {
                 if (this.$refs.form.validate()) {
-                    this.name = "";
-                    this.phone = "";
-                    this.dialog = false;
+                    this.localLoading = true;
+                    const order = new dtoOrder();
+                    order.advId = this.adv.id;
+                    order.ownerId = this.adv.userId;
+                    order.name = this.name;
+                    order.phone = this.phone;
+                    this.$store.dispatch("createOrder", order)
+                        .then( () => {
+                            this.dialog = false;
+                            this.name = "";
+                            this.phone = "";
+                        })
+                        .finally( () => {
+                            this.localLoading = false;
+                        });
                 }
             },
         },
