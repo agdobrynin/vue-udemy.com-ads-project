@@ -14,9 +14,15 @@
                             v-text-field(
                                 id="password" label="Пароль" name="password" v-model="password" prepend-icon="mdi-lock" type="password"
                                 :counter="minPasswordLength"
+                                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="showPassword ? 'text' : 'password'"
+                                @click:append="showPassword = !showPassword"
                                 :rules="rulesPassword")
                             v-text-field(
                                 id="password-confirm" label="Подтверждение пароля" name="password-confirm" v-model="passwordConfirm" prepend-icon="mdi-lock" type="password"
+                                :append-icon="showPassword2 ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="showPassword2 ? 'text' : 'password'"
+                                @click:append="showPassword2 = !showPassword2"
                                 :rules="rulesPasswordConfirm")
                             v-card-actions
                                 v-spacer
@@ -33,24 +39,26 @@
     export default {
         name: "Login",
         data: (self) => ({
-                minPasswordLength: MIN_PASSWORD_LENGTH,
-                valid: false,
+            minPasswordLength: MIN_PASSWORD_LENGTH,
+            valid: false,
+            showPassword: false,
+            showPassword2: false,
 
-                email: "",
-                password: "",
-                passwordConfirm: "",
-                rulesEmail: [
-                    v => !!v || "E-mail обязательное поле",
-                    v => /.+@.+\.(\w{2,})/.test(v) || 'Значение не является email адресом',
-                ],
-                rulesPassword: [
-                    v => !!v || "Пароль обязательное поле",
-                    v => v.length >= self.minPasswordLength || `Пароля не менее ${self.minPasswordLength} символов`,
-                ],
-                rulesPasswordConfirm: [
-                    v => !!v || "Подтвердите пароль",
-                    v => v === self.password || `Пароли не совпадаю`,
-                ],
+            email: "",
+            password: "",
+            passwordConfirm: "",
+            rulesEmail: [
+                v => !!v || "E-mail обязательное поле",
+                v => /.+@.+\.(\w{2,})/.test(v) || 'Значение не является email адресом',
+            ],
+            rulesPassword: [
+                v => !!v || "Пароль обязательное поле",
+                v => v.length >= self.minPasswordLength || `Пароля не менее ${self.minPasswordLength} символов`,
+            ],
+            rulesPasswordConfirm: [
+                v => !!v || "Подтвердите пароль",
+                v => v === self.password || `Пароли не совпадаю`,
+            ],
         }),
         computed: {
             loading: (self) => self.$store.getters.loading,
@@ -64,9 +72,10 @@
                         password: this.password,
                     };
                     this.$store.dispatch("actionRegisterUser", user)
-                        .then( () => {
+                        .then(() => {
                             this.$router.push("/");
-                        }).catch( () => {});
+                        }).catch(() => {
+                    });
                 }
             }
         },

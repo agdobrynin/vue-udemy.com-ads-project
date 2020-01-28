@@ -14,6 +14,9 @@
                             v-text-field(
                                 id="password" label="Пароль" name="password" v-model="password" prepend-icon="mdi-lock" type="password"
                                 :counter="minPasswordLength"
+                                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="showPassword ? 'text' : 'password'"
+                                @click:append="showPassword = !showPassword"
                                 :rules="rulesPassword")
                             v-card-actions
                                 v-spacer
@@ -32,6 +35,7 @@
         data: (self) => ({
             minPasswordLength: MIN_PASSWORD_LENGTH,
             valid: false,
+            showPassword: false,
 
             email: "",
             password: "",
@@ -53,7 +57,7 @@
                     const user = {email: this.email, password: this.password};
                     this.$store.dispatch("actionLoginUser", user)
                         .then(() => {
-                             this.$router.push("/");
+                            this.$router.push("/");
                         }).catch(() => {
                     });
                 }
