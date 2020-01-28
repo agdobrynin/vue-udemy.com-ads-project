@@ -1,7 +1,7 @@
 <template lang="pug">
     v-container
         v-layout(row)
-            v-flex(sm6 offset-3)
+            v-flex(sm6 offset-3 v-if="orders.length")
                 v-list(elevation="10")
                     v-toolbar-title.px-6 Заказы на покупку
                     v-list-item-group(multiple)
@@ -10,37 +10,27 @@
                                 v-list-item-action
                                     v-checkbox(:input-value="order.done" color="success" @click="doDone(order)")
                                 v-list-item-content
-                                    v-list-item-title {{ order.name }}
-                                    v-list-item-subtitle {{ order.phone }}
+                                    v-list-item-title Имя: {{ order.name }}
+                                    v-list-item-subtitle Телефон: {{ order.phone }}
                             v-list-item-action
-                                v-btn(:to="{name: 'oneAdv', params:{id: order.adId}}") Просмотр
+                                v-btn(:to="{name: 'oneAdv', params:{id: order.advId}}") Просмотр
+            v-flex(v-else)
+                h1(align="center") Заказов еще нет.
 </template>
 
 <script>
     export default {
         name: "Orders",
-        data: () => ({
-            orders: [
-                {
-                    id: 123,
-                    adId: 321,
-                    name: "Иван",
-                    phone: "+7-927-236-56-89",
-                    done: false,
-                },
-                {
-                    id: 124,
-                    adId: 31982,
-                    name: "Пётр",
-                    phone: "+7-919-547-11-05",
-                    done: false,
-                },
-            ],
-        }),
         methods: {
             doDone: (order) => {
                 order.done = true;
             },
+        },
+        created() {
+            this.$store.dispatch("fetchOrder")
+        },
+        computed: {
+            orders: (self) => self.$store.getters.orders,
         },
     }
 </script>
