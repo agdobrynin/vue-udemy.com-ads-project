@@ -20,7 +20,10 @@
                                     label="Контактный телефон"
                                     v-model="phone"
                                     prepend-inner-icon="mdi-cellphone-basic"
-                                    :rules="rulesRequire")
+                                    :rules="rulesRequire"
+                                    type="tel"
+                                    placeholder="+7 (999)-999-99-99"
+                                    v-maska="'+7 (###)-###-##-##'")
                             short-adv(:adv="adv")
             v-card-actions
                 v-spacer
@@ -31,10 +34,12 @@
 <script>
     import dtoOrder from "@/dto/dtoOrder";
     import ShortAdv from "@/components/Shared/ShortAdv";
+    import { maska } from "maska";
 
     export default {
         name: "BuyAd",
         props: ["adv"],
+        directives: { maska },
         components: {
             ShortAdv
         },
